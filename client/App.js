@@ -1,6 +1,7 @@
 import React from "react";
 import List from "./List.js";
 import InputComponent from "./InputComponent";
+import axios from 'axios';
 
 class App extends React.Component {
     constructor(props) {
@@ -11,6 +12,27 @@ class App extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.clicked = this.clicked.bind(this);
+    }
+
+    componentDidMount() {
+        this.getGroceries()
+    }
+
+    getGroceries() {
+        let tempList = this.state.groceryList
+        console.log(this.state.groceryList)
+        axios.get('/getGroceries')
+        .then(function (response) {
+            //console.log(this.state.groceryList)
+            let temp2 = tempList.push(response.data)// from the server response
+            // console.log(response.data);
+            this.setState({
+                groceryList: temp2 // this is the new list we just created
+            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     handleChange(event) {
