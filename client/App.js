@@ -1,7 +1,7 @@
-import React from "react";
+import React from "react"; // i
 import List from "./List.js";
 import InputComponent from "./InputComponent";
-import axios from 'axios';
+import axios from 'axios'; // importing axios 
 
 class App extends React.Component {
     constructor(props) {
@@ -10,24 +10,25 @@ class App extends React.Component {
             text: " ",
             groceryList: ["apples", "grapes", "peaches", "avocados", "watermelon"]
         }
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this); // binding handleChange 
         this.clicked = this.clicked.bind(this);
+        //this.getGroceries = this.getGroceries.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount() { // when the page first loads, functions will be executed. 
         this.getGroceries()
     }
 
     getGroceries() {
         let tempList = this.state.groceryList
-        console.log(this.state.groceryList)
-        axios.get('/getGroceries')
-        .then(function (response) {
+        //console.log(this.state.groceryList)
+        axios.get('/getGroceries') // anoter way to use get methods
+        .then(response => {
             //console.log(this.state.groceryList)
-            let temp2 = tempList.push(response.data)// from the server response
-            // console.log(response.data);
+            //let temp2 = tempList.concat(response.data)// from the server response
+            //console.log(response.data);
             this.setState({
-                groceryList: temp2 // this is the new list we just created
+                groceryList: tempList.concat(response.data) // this is the new list we just created
             })
         })
         .catch(function (error) {
@@ -70,3 +71,7 @@ class App extends React.Component {
 }
 
 export default App;
+
+/*
+    You can't directly modify state, so we have to use concat instead of push on line 28
+*/
